@@ -12,7 +12,6 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': token
              },
             success: (response) => {
-                console.log('success',response)
                 if(response.redirectUrl){
                     window.location.href = response.redirectUrl
                 }
@@ -26,5 +25,9 @@ $(document).ready(function () {
     $(".logout").on("click",() => {
         getToken()
         formHandler('POST','/logout')
+    })
+
+    $(".company").on("click",() => {
+        window.location.href = '/dashboard/company'
     })
 });
