@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use App\Models\UserRole;
+use App\RoleEnum;
 use Illuminate\Http\Request;
 use App\Http\Requests\SignupRequest;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +23,14 @@ class AuthenticationController extends Controller
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('pass1'))
         ]);
+
+        //making the newly signed in user a member by default
+        if($user){   
+                UserRole::create([
+                'user_id' => $user->id,
+                'user_role' => RoleEnum::MEMBER
+            ]);
+        }
         Auth::login($user);
         return redirect()->route('dashboard');
     }
