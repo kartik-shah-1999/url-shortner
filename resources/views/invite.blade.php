@@ -29,9 +29,8 @@
             </thead>
             <tbody>
                 @foreach ($users as $key => $user)
-                @if (optional($user->roles->first()?->pivot)->user_role === $filter)
                     <tr data-id="{{ $user->id }}">
-                        <td>{{ ($key+1) - $step }}</td>
+                        <td>{{ ($key+1) }}</td>
                         <td>{{ $user->name }}</td>
                         <td>
                             @if (count($user->roles ))
@@ -53,11 +52,6 @@
                             @endif
                         </td>
                     </tr> 
-                    @else
-                    @php
-                        $step += 1;
-                    @endphp   
-                    @endif
                 @endforeach
             </tbody>
         </table>
