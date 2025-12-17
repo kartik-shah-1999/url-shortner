@@ -41,11 +41,13 @@
             </div>
         @endif
 
-        <div class="col-12 col-md-3">
-            <button class="btn btn-success w-100 py-4 fw-bold invite">
-                Invite Members
-            </button>
-        </div>
+        @if ($loggedInUserRole !== App\RoleEnum::MEMBER)
+            <div class="col-12 col-md-3">
+                <button class="btn btn-success w-100 py-4 fw-bold invite">
+                    Invite Members
+                </button>
+            </div>
+        @endif
     </div>
 </div>
 @endauth

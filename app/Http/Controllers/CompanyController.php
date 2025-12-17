@@ -11,10 +11,11 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    protected $companies;
+    protected $companies, $loggedInUserRole;
 
     public function __construct(){
         $this->companies = Company::all();
+        $this->loggedInUserRole = auth()->user()->roles[0]->pivot->user_role;
     }
     public function index(){
         return view('company')->with('companies', $this->companies);
@@ -50,13 +51,15 @@ class CompanyController extends Controller
 
     public function inviteView(){
         $filterUsers = null;
-        $loggedInUser = auth()->user()->id;
-        if((int)$loggedInUser === RoleEnum::SUPERADMIN){
+        if($this->loggedInUserRole === RoleEnum::SUPERADMIN){
             $filterUsers = RoleEnum::ADMIN;
-        }else if((int)$loggedInUser === RoleEnum::ADMIN){
+        }else if($this->loggedInUserRole === RoleEnum::ADMIN){
             $filterUsers = RoleEnum::MEMBER;
         }
-        $users = User::with('roles')->where('id','!=',$loggedInUser)->get();
+        // return 'logged in user role: '.$this->loggedInUserRole.' filter user id : '.$filterUsers;
+        $users = User::with('roles')
+                ->where('id','!=',auth()->user()->id)
+                ->get();
         return view('invite')
                ->with('users',$users)
                ->with('companies', $this->companies);
