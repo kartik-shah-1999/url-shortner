@@ -62,10 +62,6 @@ $(document).ready(function () {
         window.location.href = '/dashboard/shortenedUrls'
     })
 
-    $(".url-list").on("click",() => {
-        window.location.href = '/urls'
-    })
-
     $(".role-manager").on("change",function () {
         const roleSelected = $(this).val()
         const user = $(this).closest('tr').data('id')

@@ -44,7 +44,6 @@
                 </div>
                 <div class="card-footer">
                     Already have an account? <a href="{{ route('loginView') }}">Login</a>
-                    <button class="btn btn-md btn-secondary w-100 mt-2 url-list" type="button">View All Urls</button>
                 </div>
             </div>
         </div>
