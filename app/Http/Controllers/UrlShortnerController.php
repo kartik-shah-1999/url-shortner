@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserCompany;
 use App\RoleEnum;
 use Exception;
 use App\Models\Url;
@@ -19,7 +20,8 @@ class UrlShortnerController extends Controller
         }
     }
     public function index(){
-        return view('urlshortner');
+        $companies = UserCompany::with('userCompany')->where('user_id',auth()->id())->get();
+        return view('urlshortner')->with('companies',$companies);
     }
 
     public function showAllUrls(){
@@ -29,7 +31,8 @@ class UrlShortnerController extends Controller
 
     public function urlShortner(Request $request){
         $request->validate([
-            'long_url' => ['required', 'url']
+            'long_url' => ['required', 'url'],
+            'company_id' => ['required']
         ]);
         try{
             $url = $request->input('long_url');
@@ -41,8 +44,8 @@ class UrlShortnerController extends Controller
             Url::updateOrCreate([
                 'original_url' => $url,
                 'user_id' => auth()->user()->id,
-                'company_id' => auth()->user()->company->id
             ],[
+                'company_id' => $request->input('company_id'),
                 'shortened_url' => $shortUrl,
                 'hash' => $uniqHash,
             ]);
@@ -62,18 +65,25 @@ class UrlShortnerController extends Controller
         switch($this->loggedInUserRole){
             case (RoleEnum::MEMBER) : 
                 $filterType = 'user_id';
-                $filterValue = auth()->id();
+                $filterValue = [auth()->id()];
             break;
             case (RoleEnum::ADMIN)  : 
                 $filterType = 'company_id';
-                $filterValue = auth()->user()->company->id ?? null;
+                if(count(auth()->user()->company)){
+                    foreach(auth()->user()->company as $company){
+                        $filterValue[] = $company->id;
+                    }
+                }else{
+                    $filterValue = null;
+                }
             break;
             default:
                 $filterType = null;
                 $filterValue = null;
         }
+        // return $filterValue;
         if($filterType && $filterValue){
-            $urls = $urls->where($filterType,$filterValue);
+            $urls = $urls->whereIn($filterType,$filterValue);
         }
         return view('urls')->with('urls',$urls);
     }
