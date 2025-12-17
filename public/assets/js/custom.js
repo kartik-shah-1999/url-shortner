@@ -15,10 +15,16 @@ $(document).ready(function () {
             success: (response) => {
                 if(response.redirectUrl){
                     window.location.href = response.redirectUrl
+                }else{
+                    if(response.shortenedUrl){
+                        $(".generated-url").html(`<p class="text-center" style="font-size:18px;"> Short URL : 
+                            <a href=${response.originalUrl} target="_blank">${response.shortenedUrl}</a>
+                            </p>`)
+                    }
                 }
             },
             error: (response) => {
-                console.log('error',response)
+                console.error(response)
             }
         })
     }
@@ -48,6 +54,18 @@ $(document).ready(function () {
         window.location.href = '/dashboard/role'
     })
 
+    $(".url-shortner").on("click", () => {
+        window.location.href = '/dashboard/urlShortner'
+    })
+
+    $(".urls").on("click",() => {
+        window.location.href = '/dashboard/shortenedUrls'
+    })
+
+    $(".url-list").on("click",() => {
+        window.location.href = '/urls'
+    })
+
     $(".role-manager").on("change",function () {
         const roleSelected = $(this).val()
         const user = $(this).closest('tr').data('id')
@@ -68,5 +86,13 @@ $(document).ready(function () {
         }else{
             console.error('Please select a valid role')
         }
+    })
+
+    $(".generate-url").on("click", (e) => {
+        e.preventDefault()
+        const longUrl = $('input#urlshortner').val()
+        console.log(longUrl)
+        getToken();
+        formHandler('POST','/dashboard/urlShortner/',{'long_url':longUrl})
     })
 });

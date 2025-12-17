@@ -50,4 +50,24 @@ class User extends Authenticatable
     public function roles(){
         return $this->belongsToMany(Role::class,'user_roles','user_id', 'user_role');
     }
+
+    public function uesrCompany(){
+        return $this->hasOne(UserCompany::class,'user_id');
+    }
+
+    public function company()
+    {
+        return $this->hasOneThrough(
+            Company::class,
+            UserCompany::class,
+            'user_id',     
+            'id',          
+            'id',          
+            'company_id' 
+        );
+    }
+
+    public function urls(){
+        return $this->hasMany(Url::class,'user_id','id',);
+    }
 }

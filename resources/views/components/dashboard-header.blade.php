@@ -1,6 +1,11 @@
 @auth
 @php
     $loggedInUserRole = auth()->user()->roles[0]->pivot->user_role;
+    if (!is_null(auth()->user()->company)) {
+        $userCompany = auth()->user()->company->count();
+    }else{
+        $userCompany = null;
+    }
 @endphp
 <header class="bg-primary text-white py-4 shadow-sm">
     <div class="container">
@@ -45,6 +50,14 @@
             <div class="col-12 col-md-3">
                 <button class="btn btn-success w-100 py-4 fw-bold invite">
                     Invite Members
+                </button>
+            </div>
+        @endif
+
+        @if ($loggedInUserRole !== App\RoleEnum::SUPERADMIN && $userCompany)
+            <div class="col-12 col-md-3">
+                <button class="btn btn-info w-100 py-4 fw-bold url-shortner">
+                    Url shortner
                 </button>
             </div>
         @endif
