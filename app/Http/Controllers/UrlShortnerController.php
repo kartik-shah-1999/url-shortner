@@ -25,7 +25,7 @@ class UrlShortnerController extends Controller
     }
 
     public function showAllUrls(){
-        $urls = Url::with('user','company')->paginate(5);
+        $urls = Url::with('user','company')->get();
         return view('urls')->with('urls',$urls);
     }
 
