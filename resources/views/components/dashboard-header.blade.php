@@ -47,6 +47,12 @@
                     Invite Members
                 </button>
             </div>
+
+            <div class="col-12 col-md-3">
+                <button class="btn btn-info w-100 py-4 fw-bold url-shortner">
+                    Url shortner
+                </button>
+            </div>
         @endif
     </div>
 </div>
