@@ -13,7 +13,6 @@
                     <th>Short Url</th>
                     <th>Created By</th>
                     <th>Company</th>
-                    <th>Hits</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,16 +23,10 @@
                         <td><a href="{{ $url->original_url }}" target="_blank">{{ $url->shortened_url }}</a></td>
                         <td>{{ $url->user->name }}</td>
                         <td>{{ $url->company->name }}</td>
-                        <td>{{ $url->hits }}</td>
                     </tr>    
                 @endforeach
             </tbody>
     </table>
-    @if (count($urls) > 5)
-        <div class="d-flex justify-content-center mt-3">
-            {{ $urls->links('pagination::bootstrap-5') }}
-        </div>
-    @endif
     @else
         <p>No Urls Found</p>  
     @endif
