@@ -44,7 +44,11 @@
                                 <select name="company" class="form-control company-manager">
                                     <option value="">Select option</option>
                                     @foreach ($companies as $key => $company)
+                                    @if (isset($company->userCompany))
                                         <option value="{{ $company->userCompany->id }}">{{ $company->userCompany->name }}</option>
+                                    @else
+                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             @else

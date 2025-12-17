@@ -15,11 +15,15 @@ class CompanyController extends Controller
 
     public function __construct(){
         $this->loggedInUserRole = auth()->user()->roles[0]->pivot->user_role;
-        $this->companies = UserCompany::with('userCompany')->get();
-        if($this->loggedInUserRole === RoleEnum::ADMIN){
-            $this->companies = $this->companies
-                               ->where('user_id',auth()->id());
+        if($this->loggedInUserRole === RoleEnum::SUPERADMIN){
+            $this->companies = Company::all();
         }
+        else if($this->loggedInUserRole === RoleEnum::ADMIN){
+            $this->companies = UserCompany::with('userCompany')
+                               ->where('user_id',auth()->id())
+                               ->get();
+        }
+        // dd($this->companies);
     }
     public function index(){
         return view('company')->with('companies', $this->companies);

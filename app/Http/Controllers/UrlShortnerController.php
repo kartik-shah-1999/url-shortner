@@ -69,7 +69,7 @@ class UrlShortnerController extends Controller
             break;
             case (RoleEnum::ADMIN)  : 
                 $filterType = 'company_id';
-                if(count(auth()->user()->company)){
+                if(count(auth()->user()->company->toArray())){
                     foreach(auth()->user()->company as $company){
                         $filterValue[] = $company->id;
                     }
