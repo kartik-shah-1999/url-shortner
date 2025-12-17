@@ -16,6 +16,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/company',[CompanyController::class,'createCompany'])->name('createCompany');
         Route::get('/role',[CompanyController::class,'roleView'])->name('roleView');
         Route::get('/invite',[CompanyController::class,'inviteView'])->name('inviteView');
+        Route::post('/invite/{id}',[CompanyController::class,'inviteUser'])->name('inviteUser');
         Route::patch('/updateRole/{id}',[CompanyController::class,'updateRole'])->name('updateRole');
     });
     Route::post('/logout',[AuthenticationController::class,'logout'])->name('logout');

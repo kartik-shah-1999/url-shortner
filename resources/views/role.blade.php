@@ -39,7 +39,7 @@
                             @endif
                         </td>
                         <td>
-                            <select name="role" id="role-manager" class="form-control role-manager">
+                            <select name="role" class="form-control role-manager">
                                 <option value="">Select option</option>
                                 <option value="2" {{ optional($user->roles->first()?->pivot)->user_role == 2 ? 'disabled' : '' }} >Admin</option>
                                 <option value="3" {{ optional($user->roles->first()?->pivot)->user_role == 3 ? 'disabled' : '' }} >Member</option>

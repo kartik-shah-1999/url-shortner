@@ -13,6 +13,7 @@
         case 2: $filter = 3;
         break;
     }
+    $step = 0;
 @endphp
 
 <div class="container mt-4">
@@ -28,8 +29,9 @@
             </thead>
             <tbody>
                 @foreach ($users as $key => $user)
+                @if (optional($user->roles->first()?->pivot)->user_role === $filter)
                     <tr data-id="{{ $user->id }}">
-                        <td>{{ $key+1 }}</td>
+                        <td>{{ ($key+1) - $step }}</td>
                         <td>{{ $user->name }}</td>
                         <td>
                             @if (count($user->roles ))
@@ -39,13 +41,23 @@
                             @endif
                         </td>
                         <td>
-                            @if (optional($user->roles->first()?->pivot)->user_role === $filter)
-                                <select name="company" id="" class="form-control company-manager">
+                            @if (count($companies))
+                                <select name="company" class="form-control company-manager">
                                     <option value="">Select option</option>
+                                    @foreach ($companies as $key => $company)
+                                        <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    @endforeach
                                 </select>
+                            @else
+                                <p class="text-danger">No companies available to invite. <a href="{{ route('createCompany') }}">Create</a> a company now.</p>
                             @endif
                         </td>
-                    </tr>    
+                    </tr> 
+                    @else
+                    @php
+                        $step += 1;
+                    @endphp   
+                    @endif
                 @endforeach
             </tbody>
         </table>

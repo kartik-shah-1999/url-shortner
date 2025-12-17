@@ -51,7 +51,22 @@ $(document).ready(function () {
     $(".role-manager").on("change",function () {
         const roleSelected = $(this).val()
         const user = $(this).closest('tr').data('id')
-        getToken()
-        formHandler('PATCH','/dashboard/updateRole/'+user,{'role_selected':roleSelected})
+        if(user !== ''){
+            getToken()
+            formHandler('PATCH','/dashboard/updateRole/'+user,{'role_selected':roleSelected})
+        }else{
+            console.error('Please select a valid role')
+        }
+    })
+
+    $(".company-manager").on("change", function() {
+        const companySelected = $(this).val()
+        const user = $(this).closest('tr').data('id')
+        if(user !== ''){
+            getToken()
+            formHandler('POST','/dashboard/invite/'+user,{'company_selected':companySelected})
+        }else{
+            console.error('Please select a valid role')
+        }
     })
 });

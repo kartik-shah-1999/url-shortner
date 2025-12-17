@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserCompany;
 use App\Models\UserRole;
 use App\RoleEnum;
 use App\Models\User;
@@ -10,9 +11,13 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
+    protected $companies;
+
+    public function __construct(){
+        $this->companies = Company::all();
+    }
     public function index(){
-        $companies = Company::all();
-        return view('company')->with('companies', $companies);
+        return view('company')->with('companies', $this->companies);
     }
 
     public function createCompany(Request $request){
@@ -52,10 +57,27 @@ class CompanyController extends Controller
             $filterUsers = RoleEnum::MEMBER;
         }
         $users = User::with('roles')->where('id','!=',$loggedInUser)->get();
-        return view('invite')->with('users',$users);
+        return view('invite')
+               ->with('users',$users)
+               ->with('companies', $this->companies);
+    }
+
+    public function inviteUser(Request $request, $user){
+        $request->validate([
+            'company_selected' => ['required']
+        ]);
+        UserCompany::updateOrCreate([
+            'user_id'    => $user,
+            'company_id' => $request->input('company_selected'),
+            'assignee' => auth()->user()->id
+        ]);
+        return response()->json(['redirectUrl' => '/dashboard/invite']);
     }
 
     public function updateRole(Request $request, $user){
+        $request->validate([
+            'role_selected' => ['required' | 'numeric']
+        ]);
         UserRole::where('user_id', $user)
                 ->update([
                     'user_role' => $request->input('role_selected')
