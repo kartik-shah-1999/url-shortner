@@ -91,8 +91,9 @@ $(document).ready(function () {
     $(".generate-url").on("click", (e) => {
         e.preventDefault()
         const longUrl = $('input#urlshortner').val()
-        console.log(longUrl)
+        const companyId = $('select#url-for-compnay').val()
+        console.log(companyId)
         getToken();
-        formHandler('POST','/dashboard/urlShortner/',{'long_url':longUrl})
+        formHandler('POST','/dashboard/urlShortner/',{'long_url':longUrl, 'company_id': companyId})
     })
 });

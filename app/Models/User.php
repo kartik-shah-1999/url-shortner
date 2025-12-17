@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function company()
     {
-        return $this->hasOneThrough(
+        return $this->hasManyThrough(
             Company::class,
             UserCompany::class,
             'user_id',     

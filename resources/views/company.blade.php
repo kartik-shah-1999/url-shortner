@@ -28,10 +28,10 @@
             </thead>
             <tbody>
                 @foreach ($companies as $key => $company)
-                    <tr>
-                        <td>{{ $key+1 }}</td>
-                        <td>{{ $company->name }}</td>
-                    </tr>    
+                <tr>
+                    <td>{{ $key+1 }}</td>
+                    <td>{{ $company->name }}</td>
+                </tr>    
                 @endforeach
             </tbody>
         </table>

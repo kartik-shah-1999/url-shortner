@@ -22,8 +22,8 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/invite',[CompanyController::class,'inviteView'])->name('inviteView')->middleware('invitemiddleware');
         Route::post('/invite/{id}',[CompanyController::class,'inviteUser'])->name('inviteUser');
         Route::get('/shortenedUrls',[UrlShortnerController::class,'shortenedUrls'])->name('shortenedUrls');
-        Route::get('/urlShortner',[UrlShortnerController::class,'index'])->name('urlShortnerView');
-        Route::post('/urlShortner',[UrlShortnerController::class,'urlShortner'])->name('urlShortner');
+        Route::get('/urlShortner',[UrlShortnerController::class,'index'])->name('urlShortnerView')->middleware('urlshortnermiddleware');
+        Route::post('/urlShortner',[UrlShortnerController::class,'urlShortner'])->name('urlShortner')->middleware('urlshortnermiddleware');
     });
     Route::post('/logout',[AuthenticationController::class,'logout'])->name('logout');
 });

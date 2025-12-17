@@ -29,11 +29,11 @@
                 @endforeach
             </tbody>
     </table>
-    {{-- @if ($urls->lastPage() > 1)
+    @if (count($urls) > 5)
         <div class="d-flex justify-content-center mt-3">
             {{ $urls->links('pagination::bootstrap-5') }}
         </div>
-    @endif --}}
+    @endif
     @else
         <p>No Urls Found</p>  
     @endif
