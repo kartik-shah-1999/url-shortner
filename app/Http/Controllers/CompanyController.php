@@ -52,13 +52,15 @@ class CompanyController extends Controller
     public function inviteView(){
         $filterUsers = null;
         if($this->loggedInUserRole === RoleEnum::SUPERADMIN){
-            $filterUsers = RoleEnum::ADMIN;
+            $filterUsers = [RoleEnum::ADMIN];   
         }else if($this->loggedInUserRole === RoleEnum::ADMIN){
-            $filterUsers = RoleEnum::MEMBER;
+            $filterUsers = [RoleEnum::ADMIN, RoleEnum::MEMBER];
         }
-        // return 'logged in user role: '.$this->loggedInUserRole.' filter user id : '.$filterUsers;
         $users = User::with('roles')
                 ->where('id','!=',auth()->user()->id)
+                ->whereHas('roles', function ($query) use ($filterUsers) {
+                    $query->whereIn('user_role', $filterUsers);
+                })
                 ->get();
         return view('invite')
                ->with('users',$users)
