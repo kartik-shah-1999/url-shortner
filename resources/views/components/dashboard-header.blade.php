@@ -1,4 +1,7 @@
 @auth
+@php
+    $loggedInUserRole = auth()->user()->roles[0]->pivot->user_role;
+@endphp
 <header class="bg-primary text-white py-4 shadow-sm">
     <div class="container">
         <div class="row">
@@ -24,17 +27,19 @@
             </button>
         </div>
 
-        <div class="col-12 col-md-3">
-            <button class="btn btn-success w-100 py-4 fw-bold company">
-                Companies
-            </button>
-        </div>
+        @if ($loggedInUserRole === \App\RoleEnum::SUPERADMIN)
+            <div class="col-12 col-md-3">
+                <button class="btn btn-success w-100 py-4 fw-bold company">
+                    Companies
+                </button>
+             </div>
 
-        <div class="col-12 col-md-3">
-            <button class="btn btn-warning w-100 py-4 fw-bold role">
-                Role Manager
-            </button>
-        </div>
+            <div class="col-12 col-md-3">
+                <button class="btn btn-warning w-100 py-4 fw-bold role">
+                    Role Manager
+                </button>
+            </div>
+        @endif
 
         <div class="col-12 col-md-3">
             <button class="btn btn-success w-100 py-4 fw-bold invite">
