@@ -14,8 +14,12 @@ class CompanyController extends Controller
     protected $companies, $loggedInUserRole;
 
     public function __construct(){
-        $this->companies = Company::all();
         $this->loggedInUserRole = auth()->user()->roles[0]->pivot->user_role;
+        $this->companies = UserCompany::with('userCompany')->get();
+        if($this->loggedInUserRole === RoleEnum::ADMIN){
+            $this->companies = $this->companies
+                               ->where('user_id',auth()->id());
+        }
     }
     public function index(){
         return view('company')->with('companies', $this->companies);
@@ -56,6 +60,7 @@ class CompanyController extends Controller
         }else if($this->loggedInUserRole === RoleEnum::ADMIN){
             $filterUsers = [RoleEnum::ADMIN, RoleEnum::MEMBER];
         }
+        // dd($this->companies);
         $users = User::with('roles')
                 ->where('id','!=',auth()->user()->id)
                 ->whereHas('roles', function ($query) use ($filterUsers) {
