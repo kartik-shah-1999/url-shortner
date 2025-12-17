@@ -59,16 +59,14 @@ class UrlShortnerController extends Controller
     }
 
     public function shortenedUrls(){
-        $filterType = null;
         $filterValue = null;
-        $urls = Url::with('user','company')->paginate(5);
+        $urls = Url::with('user','company')->get();
         switch($this->loggedInUserRole){
             case (RoleEnum::MEMBER) : 
-                $filterType = 'user_id';
-                $filterValue = [auth()->id()];
+                $filterValue = auth()->id();
+                $urls = $urls->where('user_id',auth()->id());
             break;
             case (RoleEnum::ADMIN)  : 
-                $filterType = 'company_id';
                 if(count(auth()->user()->company->toArray())){
                     foreach(auth()->user()->company as $company){
                         $filterValue[] = $company->id;
@@ -76,14 +74,10 @@ class UrlShortnerController extends Controller
                 }else{
                     $filterValue = null;
                 }
+                $urls = $urls->whereIn('company_id',$filterValue);
             break;
             default:
-                $filterType = null;
                 $filterValue = null;
-        }
-        // return $filterValue;
-        if($filterType && $filterValue){
-            $urls = $urls->whereIn($filterType,$filterValue);
         }
         return view('urls')->with('urls',$urls);
     }
