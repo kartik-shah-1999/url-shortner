@@ -23,12 +23,12 @@
     <li>
         Configure your database credentials in the env file - 
         <code>
-            DB_CONNECTION=mysql
-            DB_HOST=127.0.0.1
-            DB_PORT=3306
-            DB_DATABASE=[your_database_name]
-            DB_USERNAME=[your_username]  
-            DB_PASSWORD=[your_password]
+        DB_CONNECTION=mysql
+        DB_HOST=127.0.0.1
+        DB_PORT=3306
+        DB_DATABASE=[your_database_name]
+        DB_USERNAME=[your_username]  
+        DB_PASSWORD=[your_password]
         </code>
     </li>
     <li>Put this in env file - <code>ROOT_DOMAIN="http://127.0.0.1:8000"</code></li>
@@ -43,4 +43,10 @@
     </li>
     <li>Run the development server - <code>php artisan serve</code></li>
     <li>Access the URL in the browser</li>
+</ol>
+
+<h3>References</h3>
+<ol>
+<li>Official documentation of laravel - <a href="https://laravel.com/docs/12.x" target="_blank">Laravel Docs</a></li>
+<li>Chatgpt - for syntax and debugging</li>
 </ol>
