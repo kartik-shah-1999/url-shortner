@@ -20,13 +20,13 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('login') }}">
                         @csrf
-                        <label for="" class="m-1">Enter email</label>
-                        <input type="email" class="form-control mb-3" placeholder="Enter Email" name="email">
+                        <label for="email" class="m-1">Enter email</label>
+                        <input type="email" id="email" class="form-control mb-3" placeholder="Enter Email" name="email" value="{{ old('email') }}" autocomplete="off">
                         @error('email')
                             {{ displayErrorMessage('email',$message) }}
                         @enderror
-                        <label for="" class="m-1">Enter password</label>
-                        <input type="password" class="form-control mb-3" placeholder="Enter password" name="password">
+                        <label for="password" class="m-1">Enter password</label>
+                        <input type="password" id="password" class="form-control mb-3" placeholder="Enter password" name="password" value="{{ old('password') }}" autocomplete="off">
                         @error('password')
                             {{ displayErrorMessage('password',$message) }}
                         @enderror
