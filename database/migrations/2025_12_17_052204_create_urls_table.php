@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('shortened_url',255);
             $table->string('hash',10);
             $table->unsignedInteger('hits')->default(0);
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('user_id')->on('user_companies');
+            $table->foreignId('company_id')->references('company_id')->on('user_companies');
             $table->timestamps();
         });
     }
