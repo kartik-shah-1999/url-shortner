@@ -17,23 +17,23 @@
                 <div class="card-body">
                     <form method="post" action="{{ route('signup') }}">
                         @csrf
-                        <label for="" class="m-1">Enter name</label>
-                        <input type="text" class="form-control mb-3" placeholder="Enter Name" name="name">
+                        <label for="name" class="m-1">Enter name</label>
+                        <input type="text" id="name" class="form-control mb-3" placeholder="Enter Name" name="name" autocomplete="off" value="{{ old("name") }}">
                         @error('name')
                             {{ displayErrorMessage('name',$message) }}
                         @enderror
-                        <label for="" class="m-1">Enter email</label>
-                        <input type="email" class="form-control mb-3" placeholder="Enter Email" name="email">
+                        <label for="email" class="m-1">Enter email</label>
+                        <input type="email" id="email" class="form-control mb-3" placeholder="Enter Email" name="email" autocomplete="off" value="{{ old("email") }}">
                         @error('email')
                             {{ displayErrorMessage('email',$message) }}
                         @enderror
-                        <label for="" class="m-1">Enter Password</label>
-                        <input type="password" class="form-control mb-3" placeholder="Enter password" name="pass1">
+                        <label for="pass1" class="m-1">Enter Password</label>
+                        <input type="password" id="pass1" class="form-control mb-3" placeholder="Enter password" name="pass1" autocomplete="off" value="{{ old("pass1") }}">
                         @error('pass1')
                             {{ displayErrorMessage('pass1',$message) }}
                         @enderror
-                        <label for="" class="m-1">Re-enter Password</label>
-                        <input type="password" class="form-control mb-3" placeholder="Re-enter password" name="pass2">
+                        <label for="pass2" class="m-1">Re-enter Password</label>
+                        <input type="password" id="pass2" class="form-control mb-3" placeholder="Re-enter password" name="pass2" autocomplete="off" value="{{ old("pass2") }}">
                         @error('pass2')
                             {{ displayErrorMessage('pass2',$message) }}
                         @enderror
