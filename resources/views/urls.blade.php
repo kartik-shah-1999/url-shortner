@@ -8,7 +8,6 @@
     <table class="table table-bordered text-center">
         <thead>
                 <tr>
-                    <th>Si. No</th>
                     <th>Original URL</th>
                     <th>Short Url</th>
                     <th>Created By</th>
@@ -18,7 +17,6 @@
             <tbody>
                 @foreach ($urls as $key => $url)
                     <tr>
-                        <td>{{ $key+1 }}</td>
                         <td>{{ $url->original_url }}</td>
                         <td><a href="{{ $url->original_url }}" target="_blank">{{ $url->shortened_url }}</a></td>
                         <td>{{ $url->user->name }}</td>
