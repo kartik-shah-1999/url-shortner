@@ -79,7 +79,7 @@ class CompanyController extends Controller
 
     public function updateRole(Request $request, $user){
         $request->validate([
-            'role_selected' => ['required' | 'numeric']
+            'role_selected' => ['required']
         ]);
         UserRole::where('user_id', $user)
                 ->update([
